@@ -6,8 +6,8 @@
       "DOM"
     ],
     "newLine": "lf",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "ES2015",
+    "moduleResolution": "classic",
     "outDir": "dist/",
     "strict": true,
     "target": "es5"

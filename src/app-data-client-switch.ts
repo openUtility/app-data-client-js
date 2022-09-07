@@ -65,10 +65,11 @@ export class AppDataClientSwitch {
      * @returns boolean indicating the switch value. 
      */
     public async get(keyName: string): Promise<boolean> {
-        const config = await this.getConfig();
+        const _config = await this.getConfig();
         let rtnValue = false;
+        const _url = _config.endpoint + '/switch/' + keyName;
         try {
-            const rply = await this._fetch(config.endpoint, this.getOptions(config));
+            const rply = await this._fetch.call(window, _url, this.getOptions(_config));
             const bdy = await rply.text();
             rtnValue = bdy === 'true';
         } catch (ex) {
