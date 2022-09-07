@@ -1,0 +1,27 @@
+{
+  "name": "app-data-client",
+  "version": "1.0.0",
+  "description": "library for processing flags on the client",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openUtility/app-data-client-js.git"
+  },
+  "keywords": [
+    "flags",
+    "switches",
+    "switch"
+  ],
+  "author": "andrewjrvs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/openUtility/app-data-client-js/issues"
+  },
+  "homepage": "https://github.com/openUtility/app-data-client-js#readme",
+  "devDependencies": {
+    "typescript": "^4.8.2"
+  }
+}
