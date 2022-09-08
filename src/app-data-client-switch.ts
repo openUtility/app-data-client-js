@@ -5,6 +5,7 @@ type iFetch = (input: string, init?: RequestInit) => Promise<Response>;
 export class AppDataClientSwitch {
 
     private _fetch: iFetch;
+    private _core: { [key: string]: boolean; }
 
     constructor(private config: Config | Promise<Config> | (() => Config), _fetch: iFetch) {
         this._fetch = _fetch || fetch;
@@ -59,12 +60,8 @@ export class AppDataClientSwitch {
         return rtnObj
     }
 
-    /**
-     * gets the value for the passed switch 
-     * @param keyName the switch / flag we want to find the value for.
-     * @returns boolean indicating the switch value. 
-     */
-    public async get(keyName: string): Promise<boolean> {
+    /** pulls the switch/key from the host url */
+    private async fetchKey(keyName: string): Promise<Boolean> {
         const _config = await this.getConfig();
         let rtnValue = false;
         const _url = _config.endpoint + '/switch/' + keyName;
@@ -80,5 +77,19 @@ export class AppDataClientSwitch {
         return rtnValue;
     }
 
+    /**
+     * gets the value for the passed switch 
+     * @param keyName the switch / flag we want to find the value for.
+     * @returns {Promise<boolean>} indicating the switch value. 
+     */
+    public async get(keyName: string, refresh: boolean = false): Promise<boolean> {
+        // if we are refreshing the value, or it hasn't been looked up yet
+        // then pull it from the host
+        if (refresh || !(keyName in this._core)) {
+            var lookupValue = await this.fetchKey(keyName);
+            this._core[keyName] = lookupValue;
+        }    
+        return this._core[keyName];
+    }
 
 }
