@@ -1,0 +1,7 @@
+spec
+node_modules
+.devcontainer
+tsconfig*
+rollup*.js
+.git
+.gitignore

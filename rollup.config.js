@@ -12,6 +12,10 @@ export default {
             format: 'umd',
             name: 'app-data-client'
         },
+        {
+            file: 'dist/core.js',
+            format: 'cjs'
+        }
     ],
     plugins: [typescript()],
 };

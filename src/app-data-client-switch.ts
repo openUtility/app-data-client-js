@@ -4,11 +4,15 @@ type iFetch = (input: string, init?: RequestInit) => Promise<Response>;
 
 export class AppDataClientSwitch {
 
-    private _fetch: iFetch;
-    private _core: { [key: string]: boolean; }
+    private _fetch: iFetch | undefined;
+    private _core: { [key: string]: boolean; } = {};
 
-    constructor(private config: Config | Promise<Config> | (() => Config), _fetch: iFetch) {
-        this._fetch = _fetch || fetch;
+    constructor(private config: Config | Promise<Config> | (() => Config), _fetch?: iFetch) {
+        if (_fetch) {
+            this._fetch = _fetch;
+        } else if (!fetch) {
+            throw new Error("Environment doesn't have fetch, and a fetch replacement was not passed");
+        }
         
         if (!this.config) {
             throw new Error("Config property is required...");
@@ -61,12 +65,12 @@ export class AppDataClientSwitch {
     }
 
     /** pulls the switch/key from the host url */
-    private async fetchKey(keyName: string): Promise<Boolean> {
+    private async fetchKey(keyName: string): Promise<boolean> {
         const _config = await this.getConfig();
         let rtnValue = false;
         const _url = _config.endpoint + '/switch/' + keyName;
         try {
-            const rply = await this._fetch.call(window, _url, this.getOptions(_config));
+            const rply = await (this._fetch || fetch)(_url, this.getOptions(_config));
             const bdy = await rply.text();
             rtnValue = bdy === 'true';
         } catch (ex) {

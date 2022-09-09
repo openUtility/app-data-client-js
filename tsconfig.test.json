@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "None",
+        "lib": [
+            "ES2022"
+            , "DOM"
+        ],
+        "target": "ESNext",
+        "outDir": "spec/dist/",
+    }
+}
