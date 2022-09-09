@@ -5,3 +5,4 @@ tsconfig*
 rollup*.js
 .git
 .gitignore
+demo
